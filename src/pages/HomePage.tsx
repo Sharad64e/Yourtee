@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
-import SectionHeading from '../components/SectionHeading'
-import { highlights } from '../data'
+import { highlights, houseOfDragonProducts, strangerThingsProducts } from '../data'
 
 function HomePage() {
   return (
@@ -78,23 +77,69 @@ function HomePage() {
         </div>
       </div>
 
-      <div className="mt-10 rounded-[2rem] border-2 border-black bg-white p-6 shadow-[8px_8px_0_#111] sm:p-8">
-        <SectionHeading
-          eyebrow="Site map"
-          title="Now split into real pages"
-          copy="Use this structure as the pattern whenever you want to add more pages later."
-        />
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {[
-            { title: 'Shop page', copy: 'Filtered product grid with product cards and collection intro.' },
-            { title: 'Lookbook page', copy: 'Editorial blocks, styling notes, and visual campaign layouts.' },
-            { title: 'Journal page', copy: 'Brand notes, fabric stories, and longer content sections.' },
-          ].map((item) => (
-            <div key={item.title} className="rounded-[1.5rem] border-2 border-black bg-[#fff8ef] p-5">
-              <h3 className="font-display text-2xl uppercase tracking-[-0.04em] text-[#16110f]">{item.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-[#4d443f]">{item.copy}</p>
-            </div>
-          ))}
+      <div className="mt-10 overflow-hidden rounded-[2rem] border-2 border-black bg-[#070707] text-white shadow-[8px_8px_0_#111]">
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="p-6 sm:p-8">
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-[#ff4b55]">
+              First theme session
+            </p>
+            <h2 className="mt-3 font-display text-5xl uppercase leading-[0.9] tracking-[-0.06em] sm:text-6xl">
+              Stranger Things
+              <span className="block text-[#ff4b55]">merch drop</span>
+            </h2>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-[#d6d6d6]">
+              A dedicated page for Hawkins graphics, Hellfire energy, Upside Down artwork, and the full provided merch lineup.
+            </p>
+            <Link
+              to="/themes/stranger-things"
+              className="mt-6 inline-flex rounded-full border-2 border-[#ff4b55] bg-[#ff4b55] px-6 py-3 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-[#c91f28]"
+            >
+              Enter the drop
+            </Link>
+          </div>
+          <div className="grid grid-cols-3 gap-2 bg-[#15090a] p-4">
+            {strangerThingsProducts.slice(0, 6).map((product) => (
+              <img
+                key={product.id}
+                src={product.image}
+                alt={product.name}
+                className="aspect-[3/4] w-full border-2 border-black object-cover"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-10 overflow-hidden rounded-[2rem] border-2 border-black bg-[#120706] text-white shadow-[8px_8px_0_#111]">
+        <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="grid grid-cols-3 gap-2 bg-[#24100d] p-4">
+            {houseOfDragonProducts.slice(0, 6).map((product) => (
+              <img
+                key={product.id}
+                src={product.image}
+                alt={product.name}
+                className="aspect-[3/4] w-full border-2 border-black object-cover"
+              />
+            ))}
+          </div>
+          <div className="p-6 sm:p-8">
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-[#ff9f43]">
+              Second theme session
+            </p>
+            <h2 className="mt-3 font-display text-5xl uppercase leading-[0.9] tracking-[-0.06em] sm:text-6xl">
+              House of the Dragon
+              <span className="block text-[#ff5a2f]">merch drop</span>
+            </h2>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-[#ead7c2]">
+              Targaryen fire, dragon riders, Iron Throne artwork, and the full provided Westeros merch lineup.
+            </p>
+            <Link
+              to="/themes/house-of-dragon"
+              className="mt-6 inline-flex rounded-full border-2 border-[#ff5a2f] bg-[#ff5a2f] px-6 py-3 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-[#b42a18]"
+            >
+              Enter the drop
+            </Link>
+          </div>
         </div>
       </div>
     </div>

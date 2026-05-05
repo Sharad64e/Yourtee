@@ -5,6 +5,8 @@ import { useCart } from './CartContext'
 const navItems = [
   { to: '/', label: 'Home', end: true },
   { to: '/shop', label: 'Shop' },
+  { to: '/themes/stranger-things', label: 'Stranger Things' },
+  { to: '/themes/house-of-dragon', label: 'House Dragon' },
   { to: '/lookbook', label: 'Lookbook' },
   { to: '/journal', label: 'Journal' },
 ]
@@ -26,7 +28,7 @@ function SiteLayout() {
                 Modern retro essentials
               </p>
             </div>
-            <nav className="hidden items-center gap-8 text-sm font-black uppercase tracking-[0.2em] md:flex">
+            <nav className="hidden items-center gap-4 text-xs font-black uppercase tracking-[0.18em] lg:flex xl:gap-7 xl:text-sm">
               {navItems.map((item) => (
                 <NavLink
                   key={item.to}

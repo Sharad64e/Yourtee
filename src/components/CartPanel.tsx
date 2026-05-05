@@ -11,6 +11,13 @@ function CartPanel() {
     clearCart,
   } = useCart()
 
+  const cartCurrency = items.every((item) => (item.currency ?? '$') === (items[0]?.currency ?? '$'))
+    ? items[0]?.currency ?? '$'
+    : null
+
+  const formatMoney = (currency: '$' | 'Rs', value: number) =>
+    currency === 'Rs' ? `Rs ${value}` : `$${value}`
+
   return (
     <>
       {isCartOpen ? (
@@ -77,7 +84,7 @@ function CartPanel() {
                           <p className="mt-1 text-sm leading-6 text-[#5d534e]">{item.tone}</p>
                         </div>
                         <p className="font-black text-[#16110f]">
-                          ${item.numericPrice * item.quantity}
+                          {formatMoney(item.currency ?? '$', item.numericPrice * item.quantity)}
                         </p>
                       </div>
 
@@ -124,7 +131,7 @@ function CartPanel() {
               Subtotal
             </p>
             <p className="font-display text-3xl uppercase tracking-[-0.04em] text-[#16110f]">
-              ${subtotal}
+              {cartCurrency ? formatMoney(cartCurrency, subtotal) : 'Mixed'}
             </p>
           </div>
           <div className="flex gap-3">
