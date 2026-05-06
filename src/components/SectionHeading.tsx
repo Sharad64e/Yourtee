@@ -12,7 +12,7 @@ function SectionHeading({ eyebrow, title, copy, dark = false }: SectionHeadingPr
         {eyebrow}
       </p>
       <h2
-        className={`font-display text-4xl uppercase tracking-[-0.04em] sm:text-5xl ${
+        className={`font-display text-4xl uppercase sm:text-5xl ${
           dark ? 'text-[#fff1dc]' : 'text-[#16110f]'
         }`}
       >

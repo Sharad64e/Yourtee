@@ -1,46 +1,75 @@
+import { Link } from 'react-router-dom'
 import type { Product } from '../data'
 import { useCart } from './CartContext'
+import { useWishlist } from './WishlistContext'
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({
+  product,
+  onQuickView,
+}: {
+  product: Product
+  onQuickView?: (product: Product) => void
+}) {
   const { addToCart } = useCart()
+  const { isWishlisted, toggleWishlist } = useWishlist()
+  const defaultSize = product.sizes?.[1] ?? 'M'
 
   return (
-    <article className="group overflow-hidden rounded-[2rem] border-2 border-black bg-[#fff8ef] shadow-[8px_8px_0_#111] transition-transform duration-300 hover:-translate-y-1">
-      <div className="relative overflow-hidden border-b-2 border-black bg-[#dfe7f2]">
+    <article className="group overflow-hidden border border-[#e4ddd3] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(29,23,20,0.12)]">
+      <div className="relative overflow-hidden bg-[#eee8df]">
         <img
           src={product.image}
           alt={product.name}
           className="aspect-[4/5] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
         />
         {product.badge ? (
-          <span className="absolute left-4 top-4 rounded-full border-2 border-black bg-[#ff6f91] px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-black">
+          <span className="absolute left-3 top-3 bg-[#1d1714]/90 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-white">
             {product.badge}
           </span>
         ) : null}
+        <button
+          type="button"
+          aria-label="Toggle wishlist"
+          onClick={() => toggleWishlist(product.id)}
+          className={`absolute right-3 top-3 h-9 w-12 border border-[#1d1714] text-[10px] font-black uppercase transition ${
+            isWishlisted(product.id)
+              ? 'bg-[#c7352a] text-white'
+              : 'bg-white text-[#1d1714] hover:bg-[#fff5ec]'
+          }`}
+        >
+          {isWishlisted(product.id) ? 'Saved' : 'Save'}
+        </button>
       </div>
-      <div className="space-y-4 p-6">
+      <div className="space-y-4 p-4">
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h3 className="font-display text-2xl uppercase tracking-[-0.04em] text-[#16110f]">
+          <div className="min-w-0">
+            <Link
+              to={`/products/${product.id}`}
+              className="font-display text-xl uppercase text-[#16110f] transition hover:text-[#c7352a]"
+            >
               {product.name}
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-[#5d534e]">{product.tone}</p>
+            </Link>
+            <p className="mt-1 text-sm leading-6 text-[#5d534e]">{product.tone}</p>
+            <p className="mt-2 text-xs font-bold uppercase tracking-[0.12em] text-[#8a7a6d]">
+              {product.fit ?? 'Relaxed'} / {product.color ?? 'Core'}
+            </p>
           </div>
-          <p className="rounded-full border-2 border-black bg-white px-3 py-1 font-black text-[#16110f]">
+          <p className="shrink-0 text-sm font-black text-[#16110f]">
             {product.price}
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <button
             type="button"
-            onClick={() => addToCart(product)}
-            className="flex-1 rounded-full border-2 border-black bg-[#16110f] px-4 py-3 text-sm font-black uppercase tracking-[0.22em] text-white transition hover:bg-[#2b2320]"
+            onClick={() => addToCart(product, { size: defaultSize })}
+            className="flex-1 border border-[#16110f] bg-[#16110f] px-4 py-3 text-xs font-black uppercase tracking-[0.18em] text-white transition hover:bg-[#c7352a]"
           >
-            Add to cart
+            Quick add
           </button>
           <button
             type="button"
-            className="rounded-full border-2 border-black bg-[#5fd6ff] px-4 py-3 text-sm font-black uppercase tracking-[0.18em] text-black transition hover:bg-[#87e1ff]"
+            onClick={() => onQuickView?.(product)}
+            className="border border-[#d7cec2] bg-[#fffaf2] px-4 py-3 text-xs font-black uppercase tracking-[0.16em] text-[#16110f] transition hover:border-[#c7352a] hover:text-[#c7352a]"
           >
             View
           </button>

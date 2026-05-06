@@ -9,6 +9,7 @@ import type { Product } from '../data'
 
 type CartItem = Product & {
   quantity: number
+  selectedSize?: string
 }
 
 type CartContextValue = {
@@ -16,7 +17,7 @@ type CartContextValue = {
   itemCount: number
   subtotal: number
   isCartOpen: boolean
-  addToCart: (product: Product) => void
+  addToCart: (product: Product, options?: { quantity?: number; size?: string }) => void
   removeFromCart: (productId: string) => void
   updateQuantity: (productId: string, quantity: number) => void
   clearCart: () => void
@@ -50,17 +51,24 @@ export function CartProvider({ children }: { children: ReactNode }) {
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
   }, [items])
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, options?: { quantity?: number; size?: string }) => {
+    const quantityToAdd = options?.quantity ?? 1
+    const selectedSize = options?.size
+
     setItems((currentItems) => {
-      const existing = currentItems.find((item) => item.id === product.id)
+      const existing = currentItems.find(
+        (item) => item.id === product.id && item.selectedSize === selectedSize,
+      )
 
       if (existing) {
         return currentItems.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
+          item.id === product.id && item.selectedSize === selectedSize
+            ? { ...item, quantity: item.quantity + quantityToAdd }
+            : item,
         )
       }
 
-      return [...currentItems, { ...product, quantity: 1 }]
+      return [...currentItems, { ...product, quantity: quantityToAdd, selectedSize }]
     })
 
     setIsCartOpen(true)

@@ -1,63 +1,89 @@
+import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import CartPanel from './CartPanel'
 import { useCart } from './CartContext'
+import { useWishlist } from './WishlistContext'
 
 const navItems = [
   { to: '/', label: 'Home', end: true },
   { to: '/shop', label: 'Shop' },
-  { to: '/themes/stranger-things', label: 'Stranger Things' },
-  { to: '/themes/house-of-dragon', label: 'House Dragon' },
-  { to: '/lookbook', label: 'Lookbook' },
-  { to: '/journal', label: 'Journal' },
+  { to: '/themes', label: 'Themes' },
+  { to: '/account', label: 'Account' },
 ]
 
 function SiteLayout() {
   const { itemCount, toggleCart } = useCart()
+  const { wishlistCount } = useWishlist()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
+    `border-b-2 pb-1 transition-colors duration-200 hover:border-[#c7352a] hover:text-[#c7352a] ${
+      isActive ? 'border-[#c7352a] text-[#c7352a]' : 'border-transparent'
+    }`
 
   return (
     <div className="min-h-screen bg-[#fffaf2] text-[#1d1714]">
-      <div className="retro-grid pointer-events-none fixed inset-0 opacity-40" />
       <CartPanel />
 
-      <main className="relative mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <section className="overflow-hidden rounded-[2rem] border-2 border-black bg-[#fff8ef] shadow-[10px_10px_0_#111]">
-          <header className="flex items-center justify-between border-b-2 border-black px-5 py-4 sm:px-8">
-            <div>
-              <p className="font-display text-2xl uppercase tracking-[-0.06em]">yourtee</p>
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#6e625b]">
-                Modern retro essentials
-              </p>
-            </div>
-            <nav className="hidden items-center gap-4 text-xs font-black uppercase tracking-[0.18em] lg:flex xl:gap-7 xl:text-sm">
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.end}
-                  className={({ isActive }) =>
-                    isActive ? 'border-b-2 border-black pb-1' : 'pb-1'
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ))}
-            </nav>
-            <div className="flex items-center gap-3">
-              <div className="hidden rounded-2xl border-2 border-black bg-[#f6d25f] px-4 py-2 text-xs font-black uppercase tracking-[0.2em] sm:block">
-                Core 03
-              </div>
-              <button
-                type="button"
-                onClick={toggleCart}
-                className="rounded-2xl border-2 border-black bg-[#16110f] px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white"
-              >
-                Cart ({itemCount})
-              </button>
-            </div>
-          </header>
+      <header className="sticky top-0 z-30 border-b border-[#e7ddd1] bg-[#fffaf2]/95 backdrop-blur">
+        <div className="flex items-center justify-between px-5 py-3 sm:px-8 lg:px-16">
+          <NavLink to="/" className="shrink-0">
+            <p className="font-display text-xl uppercase">yourtee</p>
+            <p className="hidden text-[10px] font-bold uppercase tracking-[0.28em] text-[#6e625b] sm:block">
+              Modern retro essentials
+            </p>
+          </NavLink>
+          <nav className="hidden items-center gap-4 text-[11px] font-black uppercase tracking-[0.16em] lg:flex xl:gap-7">
+            {navItems.map((item) => (
+              <NavLink key={item.to} to={item.to} end={item.end} className={linkClass}>
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="flex items-center gap-2">
+            <NavLink
+              to="/account"
+              className="hidden border border-[#1d1714] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] transition hover:border-[#c7352a] hover:text-[#c7352a] sm:block"
+            >
+              Wish ({wishlistCount})
+            </NavLink>
+            <button
+              type="button"
+              onClick={toggleCart}
+              className="border border-[#16110f] bg-[#16110f] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-white transition hover:bg-[#c7352a]"
+            >
+              Cart ({itemCount})
+            </button>
+            <button
+              type="button"
+              aria-label="Toggle navigation menu"
+              onClick={() => setIsMenuOpen((value) => !value)}
+              className="border border-[#16110f] px-3 py-2 text-sm font-black lg:hidden"
+            >
+              {isMenuOpen ? 'X' : 'Menu'}
+            </button>
+          </div>
+        </div>
 
-          <Outlet />
-        </section>
+        {isMenuOpen ? (
+          <nav className="grid gap-1 border-t border-[#e7ddd1] px-5 py-4 text-xs font-black uppercase tracking-[0.18em] sm:px-8 lg:hidden">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                onClick={() => setIsMenuOpen(false)}
+                className={linkClass}
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+        ) : null}
+      </header>
+
+      <main className="relative w-full">
+        <Outlet />
       </main>
     </div>
   )

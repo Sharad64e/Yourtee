@@ -19,7 +19,7 @@ function JournalPage() {
                   {index + 1}
                 </span>
                 <div>
-                  <h3 className="font-display text-2xl uppercase tracking-[-0.04em] text-[#16110f]">{entry.title}</h3>
+                  <h3 className="font-display text-2xl uppercase text-[#16110f]">{entry.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-[#4d443f]">{entry.copy}</p>
                 </div>
               </div>
@@ -30,7 +30,7 @@ function JournalPage() {
         <article className="overflow-hidden rounded-[2rem] border-2 border-black bg-[#ff6f91] shadow-[8px_8px_0_#111]">
           <div className="border-b-2 border-black bg-[#fff8ef] px-6 py-5">
             <p className="text-xs font-black uppercase tracking-[0.28em] text-[#6e625b]">Editorial note</p>
-            <h3 className="mt-2 font-display text-4xl uppercase leading-none tracking-[-0.06em] text-[#16110f]">
+            <h3 className="mt-2 font-display text-4xl uppercase leading-none text-[#16110f]">
               Quiet basics.
               <br />
               Strong frames.
@@ -44,7 +44,7 @@ function JournalPage() {
               </p>
               <div className="mt-8 rounded-[1.5rem] border-2 border-black bg-[#fff8ef] p-5">
                 <p className="text-xs font-black uppercase tracking-[0.24em] text-[#6e625b]">Good for</p>
-                <p className="mt-2 font-display text-3xl uppercase leading-none tracking-[-0.06em]">
+                <p className="mt-2 font-display text-3xl uppercase leading-none">
                   Stories, updates,
                   <br />
                   and collection notes.

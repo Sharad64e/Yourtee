@@ -31,7 +31,7 @@ function LookbookPage() {
                   <div className={`inline-flex rounded-full bg-gradient-to-r ${card.accent} px-4 py-1 text-xs font-black uppercase tracking-[0.22em] text-black`}>
                     Styling direction
                   </div>
-                  <h3 className="mt-4 font-display text-3xl uppercase tracking-[-0.05em] text-[#fff2dc]">{card.title}</h3>
+                  <h3 className="mt-4 font-display text-3xl uppercase text-[#fff2dc]">{card.title}</h3>
                   <p className="mt-3 text-sm leading-7 text-[#d8ccc0] sm:text-base">{card.copy}</p>
                 </div>
               </div>

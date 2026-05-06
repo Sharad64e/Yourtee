@@ -43,4 +43,12 @@
     background-size: 32px 32px;
     mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
   }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
